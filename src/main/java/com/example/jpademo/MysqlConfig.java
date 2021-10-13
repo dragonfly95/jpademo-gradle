@@ -21,52 +21,27 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager",
-        basePackages = "com.example.jpademo.repository"
-)
 public class MysqlConfig {
-
     @Primary
-    @Bean(name = "dataSource")
+    @Bean(name="dataSource")
     @ConfigurationProperties("spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
-
-//
-//    @Bean(name="entityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-//                                                                       @Qualifier("dataSource") DataSource dataSource) {
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        vendorAdapter.setGenerateDdl(false);
-//
-//        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-//        factory.setJpaVendorAdapter(vendorAdapter);
-//        factory.setPackagesToScan("com.example.jpademo.domain");
-//        factory.setDataSource(dataSource);
-//        return factory;
-//    }
-
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-                                                                       @Qualifier("dataSource") DataSource dataSource,
-                                                                       @Qualifier("jpaProperties") JpaProperties jpaProperties) {
-        return builder
-                .dataSource(dataSource)
-                .properties(jpaProperties.getProperties())
-                .packages("com.example.jpademo.domain")
-                .persistenceUnit("default")
-                .build();
+    @Primary
+    @Bean(name="entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            EntityManagerFactoryBuilder builder, @Qualifier("dataSource") DataSource dataSource) {
+        return builder.dataSource(dataSource).build();
     }
 
+    @Bean(name="transactionManager")
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
 
-    @Bean(name = "transactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
-        return jpaTransactionManager;
+        return transactionManager;
     }
 }
