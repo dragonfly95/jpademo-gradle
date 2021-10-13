@@ -16,7 +16,8 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             url: "test.do",
-            data: JSON.stringify({"regDate": new Date()}),
+            data: JSON.stringify({"regDate": new Date().getTime()}),
+            contentType: "application/json",
             success: function (response) {
                 debugger
             },

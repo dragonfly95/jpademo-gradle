@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
 	compileOnly {
@@ -16,18 +16,32 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+
+	// =============================== Spring Boot Starter ===============================
+	// Spring Starter Tomcat
+
+	// Spring Data Jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4', version: '1.16'
+	// Spring Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-//	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	implementation 'mysql:mysql-connector-java'
+	// Spring Starter Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+
+	// =============================== External library ===============================
+
+	// Maria DB
+	implementation "org.mariadb.jdbc:mariadb-java-client"
+
+
 	compileOnly 'org.projectlombok:lombok'
 //	runtimeOnly 'com.h2database:h2'
 

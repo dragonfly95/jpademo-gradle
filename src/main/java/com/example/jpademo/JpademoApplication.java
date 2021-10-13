@@ -13,8 +13,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
 
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-@ComponentScan("com.example.jpademo")
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+//@ComponentScan("com.example.jpademo")
 @SpringBootApplication
 public class JpademoApplication {
 
