@@ -26,11 +26,15 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Query(value = "select new com.example.jpademo.dto.SongDto(s.id, s.singer, s.title, s.person) from Song s join  s.person as r")
     List<SongDto> retrieveSongs(@Param("str") String str);
 
-    List<PersonView> findByTitle(String title);
+    Page<PersonView> findByTitle(String title, Pageable pageable);
 
     public interface PersonView {
         String getTitle();
+        Persona getPerson();
+//        String getPersonName();
+    }
 
-        String getPersonName();
+    public interface Persona {
+        String getName();
     }
 }

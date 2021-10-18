@@ -68,8 +68,11 @@ class JpademoApplicationTests {
 		List<SongDto> allTt = songRepository.retrieveSongs("hello");
 		System.out.println("allTt = " + allTt);
 
-		List<SongRepository.PersonView> title0 = songRepository.findByTitle("title0");
-		System.out.println("title0 = " + title0);
+		Page<SongRepository.PersonView> title0 = songRepository.findByTitle("title0", pageable);
+//		System.out.println("title0 = " + title0.getContent());
+		for (SongRepository.PersonView v: title0.getContent()) {
+			System.out.println("v.getPerson().getName() = " + v.getPerson().getName());
+		}
 		assertEquals(collect.size(), 10);
 		System.out.println("true = " + true);
 	}
