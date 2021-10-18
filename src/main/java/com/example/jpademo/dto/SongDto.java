@@ -1,4 +1,4 @@
-package com.example.jpademo;
+package com.example.jpademo.dto;
 
 import com.example.jpademo.domain.Person;
 import com.example.jpademo.domain.Song;
@@ -18,6 +18,11 @@ public class SongDto {
 
     private Person person;
 
+    public SongDto(Long id, String title, String singer) {
+        this.id = id;
+        this.title = title;
+        this.singer = singer;
+    }
 
     public SongDto(Song song) {
         this.id = song.getId();

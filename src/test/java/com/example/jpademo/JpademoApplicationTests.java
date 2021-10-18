@@ -1,10 +1,10 @@
 package com.example.jpademo;
 
-import com.example.jpademo.domain.Person;
 import com.example.jpademo.domain.Song;
+import com.example.jpademo.dto.SongDto;
+import com.example.jpademo.dto.SongDto2;
 import com.example.jpademo.repository.PersonRepository;
 import com.example.jpademo.repository.SongRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,11 +55,18 @@ class JpademoApplicationTests {
 //		em.flush();
 //		em.clear();
 		PageRequest pageable = PageRequest.of(0, 7);
-		Page<Song> songs = songRepository.findAll(pageable);
+		List<Song> songs = songRepository.findAll();
+
 		List<SongDto> collect = songs.stream().map(SongDto::new).collect(Collectors.toList());
 		for (SongDto song : collect) {
 			System.out.println("song = " + song);
 		}
+
+//		Page<SongRepository.PersonView> pages = songRepository.findAllByTitleContaining("title", pageable);
+//		System.out.println("pages = " + pages);
+
+		List<SongDto> allTt = songRepository.retrieveSongs("hello");
+		System.out.println("allTt = " + allTt);
 
 		List<SongRepository.PersonView> title0 = songRepository.findByTitle("title0");
 		System.out.println("title0 = " + title0);
