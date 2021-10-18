@@ -18,7 +18,9 @@ import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -49,6 +51,20 @@ class JpademoApplicationTests {
 		}
 	}
 */
+
+	@Test
+	@Transactional
+	void print1() {
+//		List<Map> resultList = em.createQuery("select new Map(s.id, s.singer, s.title, s.person) from Song s join s.person as p", Map.class).getResultList();
+//		resultList.stream().forEach(songDto -> System.out.println("songDto = " + songDto));
+
+		List<Song> resultList = em.createQuery("select s from Song s join fetch s.person as p", Song.class).getResultList();
+		List<SongDto> collect = resultList.stream().map(SongDto::new).collect(Collectors.toList());
+		for (SongDto v : collect) {
+			System.out.println("v = " + v);
+		}
+	}
+
 	@Test
 	@Transactional
 	@DisplayName("n + 1 문제를 확인하는 테스트")
@@ -64,8 +80,8 @@ class JpademoApplicationTests {
 			System.out.println("song = " + song);
 		}
 
-//		Page<SongRepository.PersonView> pages = songRepository.findAllByTitleContaining("title", pageable);
-//		System.out.println("pages = " + pages);
+		Page<SongRepository.PersonView> pages = songRepository.findAllByTitleContaining("title", pageable);
+		System.out.println("pages = " + pages);
 
 		List<SongDto> allTt = songRepository.retrieveSongs("hello");
 		System.out.println("allTt = " + allTt);
