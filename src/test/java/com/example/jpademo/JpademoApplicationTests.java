@@ -3,6 +3,7 @@ package com.example.jpademo;
 import com.example.jpademo.domain.Song;
 import com.example.jpademo.dto.SongDto;
 import com.example.jpademo.dto.SongDto2;
+import com.example.jpademo.dto.SongDto3;
 import com.example.jpademo.repository.PersonRepository;
 import com.example.jpademo.repository.SongRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,6 +69,9 @@ class JpademoApplicationTests {
 
 		List<SongDto> allTt = songRepository.retrieveSongs("hello");
 		System.out.println("allTt = " + allTt);
+
+		List<HashMap> eee = songRepository.mapSongs("eee");
+		System.out.println("eee = " + eee);
 
 		Page<SongRepository.PersonView> title0 = songRepository.findByTitle("title0", pageable);
 //		System.out.println("title0 = " + title0.getContent());

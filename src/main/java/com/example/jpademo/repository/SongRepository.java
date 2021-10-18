@@ -2,15 +2,14 @@ package com.example.jpademo.repository;
 
 import com.example.jpademo.domain.Song;
 import com.example.jpademo.dto.SongDto;
-import com.example.jpademo.dto.SongDto2;
+import com.example.jpademo.dto.SongDto3;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface SongRepository extends JpaRepository<Song, Long> {
@@ -25,6 +24,9 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     @Query(value = "select new com.example.jpademo.dto.SongDto(s.id, s.singer, s.title, s.person) from Song s join  s.person as r")
     List<SongDto> retrieveSongs(@Param("str") String str);
+
+    @Query(value = "select new Map(s.id, s.singer, s.title, s.person) from Song s join s.person as r")
+    List<HashMap> mapSongs(@Param("str") String str);
 
     Page<PersonView> findByTitle(String title, Pageable pageable);
 
