@@ -25,7 +25,7 @@ public class JpademoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<?> deptEmpDtos = departmentRepository.fetchEmpDeptDataLeftJoin();
-		deptEmpDtos.stream().forEach(l -> System.out.println("l = " + l));
+//		List<?> deptEmpDtos = departmentRepository.fetchEmpDeptDataLeftJoin();
+//		deptEmpDtos.stream().forEach(l -> System.out.println("l = " + l));
 	}
 }
