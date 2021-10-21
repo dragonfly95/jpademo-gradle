@@ -6,7 +6,9 @@ import com.example.jpademo.repository.SalGradeRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 @RestController
@@ -26,8 +29,13 @@ public class DeptController {
 
     private final SalGradeRepository salGradeRepository;
 
+    private final MessageSource messageSource;
     @GetMapping("test.do")
-    public ModelAndView test() {
+    public ModelAndView test(Locale locale, ModelMap modelMap) {
+
+        String message = messageSource.getMessage("unKnown.msg", null, locale);
+        System.out.println("message = " + message);
+        modelMap.addAttribute("message" ,message);
         ModelAndView modelAnd = new ModelAndView("test");
         return modelAnd;
     }
